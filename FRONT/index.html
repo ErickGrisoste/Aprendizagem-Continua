@@ -9,17 +9,18 @@
 </head>
 <body>
   <nav class="navbar navbar-dark bg-primary mb-3">
-    <div class="container">
+    <div class="container d-flex justify-content-between">
       <a class="navbar-brand" href="#">📚 Aprendizagem Contínua</a>
-      <a class="btn btn-light btn-sm" href="cadastro.html">+ Novo Material</a>
+      <div>
+        <a class="btn btn-light btn-sm me-2" href="cadastro.html">+ Novo Material</a>
+        <a class="btn btn-outline-light btn-sm" href="#" onclick="logout()">Sair</a>
+      </div>
     </div>
   </nav>
-
   <main class="container">
     <h2 class="mb-3">Disciplinas</h2>
     <div id="disciplinas" class="row g-3"></div>
   </main>
-
   <script src="script.js"></script>
 </body>
 </html>

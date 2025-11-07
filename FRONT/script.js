@@ -1,9 +1,10 @@
-const apiBase = "http://localhost:8080/api"; // ajuste se necessário
+const apiBase = "http://localhost:8080/api";
 
 document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("disciplinas")) carregarDisciplinas();
   if (document.getElementById("materiais")) carregarMateriais();
   if (document.getElementById("formCadastro")) configurarCadastro();
+  if (document.getElementById("formLogin")) configurarLogin();
 });
 
 async function carregarDisciplinas() {
@@ -12,7 +13,6 @@ async function carregarDisciplinas() {
     const data = await resp.json();
     const container = document.getElementById("disciplinas");
     container.innerHTML = "";
-
     data.forEach(d => {
       container.innerHTML += `
         <div class="col-md-4">
@@ -33,13 +33,11 @@ async function carregarMateriais() {
   const id = params.get("id");
   const nome = params.get("nome");
   document.getElementById("tituloDisciplina").textContent = nome;
-
   try {
     const resp = await fetch(`${apiBase}/materiais/disciplina/${id}`);
     const data = await resp.json();
     const container = document.getElementById("materiais");
     container.innerHTML = "";
-
     data.forEach(m => {
       let conteudo = "";
       if (m.tipo === "video") {
@@ -49,7 +47,6 @@ async function carregarMateriais() {
       } else {
         conteudo = `<a href="${m.url}" target="_blank" class="btn btn-secondary">Abrir Material</a>`;
       }
-
       container.innerHTML += `
         <div class="col-md-6">
           <div class="card p-3">
@@ -74,14 +71,12 @@ function configurarCadastro() {
       tipo: document.getElementById("tipo").value,
       url: document.getElementById("url").value
     };
-
     try {
       const resp = await fetch(`${apiBase}/materiais`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(novoMaterial)
       });
-
       if (resp.ok) {
         alert("Material cadastrado com sucesso!");
         form.reset();
@@ -92,4 +87,39 @@ function configurarCadastro() {
       console.error(e);
     }
   });
+}
+
+async function configurarLogin() {
+  const form = document.getElementById("formLogin");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+    if (email === "admin@teste.com" && senha === "123456") {
+      localStorage.setItem("usuario", JSON.stringify({ email }));
+      window.location.href = "index.html";
+    } else {
+      try {
+        const resp = await fetch(`${apiBase}/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, senha })
+        });
+        if (resp.ok) {
+          const user = await resp.json();
+          localStorage.setItem("usuario", JSON.stringify(user));
+          window.location.href = "index.html";
+        } else {
+          alert("Usuário ou senha incorretos!");
+        }
+      } catch {
+        alert("Falha na autenticação");
+      }
+    }
+  });
+}
+
+function logout() {
+  localStorage.removeItem("usuario");
+  window.location.href = "login.html";
 }
