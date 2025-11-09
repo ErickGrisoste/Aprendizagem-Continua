@@ -43,4 +43,9 @@ public class MaterialService {
         materialRepository.delete(materialDeletado);
     }
 
+    public List<Material> buscarPorDisciplina(Long disciplinaId) {
+        return materialRepository.findByDisciplinaDisciplinaId(disciplinaId);
+    }
+
+
 }

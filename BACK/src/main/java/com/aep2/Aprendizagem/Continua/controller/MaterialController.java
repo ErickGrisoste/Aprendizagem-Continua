@@ -32,6 +32,12 @@ public class MaterialController {
         return ResponseEntity.ok(materialService.buscarMaterialPorId(id));
     }
 
+    @GetMapping("/disciplina/{disciplinaId}")
+    public ResponseEntity<List<Material>> listarPorDisciplina(@PathVariable Long disciplinaId) {
+        return ResponseEntity.ok(materialService.buscarPorDisciplina(disciplinaId));
+    }
+
+
     @PutMapping("/{id}")
     public ResponseEntity<Material> editarMaterial(@PathVariable Long id, @RequestBody Material material){
         return ResponseEntity.ok(materialService.editarMaterial(id, material));

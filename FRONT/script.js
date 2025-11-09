@@ -1,4 +1,4 @@
-const apiBase = "http://localhost:8080/api";
+const apiBase = "http://localhost:8080";
 
 document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("disciplinas")) carregarDisciplinas();
@@ -9,16 +9,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function carregarDisciplinas() {
   try {
-    const resp = await fetch(`${apiBase}/disciplinas`);
+    const resp = await fetch(`${apiBase}/disciplina`);
     const data = await resp.json();
     const container = document.getElementById("disciplinas");
     container.innerHTML = "";
     data.forEach(d => {
+        console.log(d);
       container.innerHTML += `
         <div class="col-md-4">
           <div class="card p-3">
             <h5>${d.nome}</h5>
-            <a href="materiais.html?id=${d.id}&nome=${encodeURIComponent(d.nome)}" class="btn btn-primary btn-sm mt-2">Ver materiais</a>
+            <a href="./materiais.html?id=${d.disciplinaId}&nome=${encodeURIComponent(d.nome)}" class="btn btn-primary btn-sm mt-2">Ver materiais</a>
           </div>
         </div>
       `;
@@ -29,12 +30,18 @@ async function carregarDisciplinas() {
 }
 
 async function carregarMateriais() {
+    console.log("carregarMateriais() foi chamada");
+
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
   const nome = params.get("nome");
   document.getElementById("tituloDisciplina").textContent = nome;
+
+  console.log("API URL:", `${apiBase}/material/disciplina/${id}`);
+
   try {
-    const resp = await fetch(`${apiBase}/materiais/disciplina/${id}`);
+
+    const resp = await fetch(`${apiBase}/material/disciplina/${id}`); //${apiBase}/materiais/disciplina/${id}
     const data = await resp.json();
     const container = document.getElementById("materiais");
     container.innerHTML = "";
@@ -72,7 +79,7 @@ function configurarCadastro() {
       url: document.getElementById("url").value
     };
     try {
-      const resp = await fetch(`${apiBase}/materiais`, {
+      const resp = await fetch(`${apiBase}/material`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(novoMaterial)
