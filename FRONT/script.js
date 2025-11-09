@@ -14,12 +14,14 @@ async function carregarDisciplinas() {
     const container = document.getElementById("disciplinas");
     container.innerHTML = "";
     data.forEach(d => {
-        console.log(d);
       container.innerHTML += `
         <div class="col-md-4">
           <div class="card p-3">
             <h5>${d.nome}</h5>
-            <a href="./materiais.html?id=${d.disciplinaId}&nome=${encodeURIComponent(d.nome)}" class="btn btn-primary btn-sm mt-2">Ver materiais</a>
+            <a href="materias.html?id=${d.disciplinaId}&nome=${encodeURIComponent(d.nome)}" 
+              class="btn btn-primary btn-sm mt-2">
+              Ver materiais
+            </a>
           </div>
         </div>
       `;
@@ -30,41 +32,44 @@ async function carregarDisciplinas() {
 }
 
 async function carregarMateriais() {
-    console.log("carregarMateriais() foi chamada");
-
   const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
-  const nome = params.get("nome");
-  document.getElementById("tituloDisciplina").textContent = nome;
+  const disciplinaId = params.get("id");
 
-  console.log("API URL:", `${apiBase}/material/disciplina/${id}`);
+  if (!disciplinaId) {
+    alert("Nenhuma disciplina selecionada.");
+    return;
+  }
 
   try {
+    const resp = await fetch(`${apiBase}/material/disciplina/${disciplinaId}`);
+    if (!resp.ok) throw new Error("Erro ao buscar materiais");
 
-    const resp = await fetch(`${apiBase}/material/disciplina/${id}`); //${apiBase}/materiais/disciplina/${id}
     const data = await resp.json();
     const container = document.getElementById("materiais");
+    const titulo = document.getElementById("tituloDisciplina");
+
     container.innerHTML = "";
+    titulo.textContent = `Materiais da disciplina #${disciplinaId}`;
+
+    if (data.length === 0) {
+      container.innerHTML = "<p>Nenhum material encontrado.</p>";
+      return;
+    }
+
     data.forEach(m => {
-      let conteudo = "";
-      if (m.tipo === "video") {
-        conteudo = `<video controls width="100%"><source src="${m.url}" type="video/mp4"></video>`;
-      } else if (m.tipo === "pdf") {
-        conteudo = `<iframe src="${m.url}" width="100%" height="400"></iframe>`;
-      } else {
-        conteudo = `<a href="${m.url}" target="_blank" class="btn btn-secondary">Abrir Material</a>`;
-      }
       container.innerHTML += `
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="card p-3">
             <h5>${m.titulo}</h5>
-            ${conteudo}
+            <p>${m.descricao || ""}</p>
+            <a href="${m.link}" target="_blank" class="btn btn-success btn-sm mt-2">Acessar</a>
           </div>
         </div>
       `;
     });
+
   } catch (e) {
-    console.error(e);
+    console.error("Erro ao carregar materiais:", e);
   }
 }
 
