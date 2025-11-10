@@ -2,6 +2,7 @@ const apiBase = "http://localhost:8080";
 
 document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("disciplinas")) carregarDisciplinas();
+<<<<<<< HEAD
   if (document.getElementById("disciplina")) carregarDisciplinasSelect();
   if (document.getElementById("materiais")) carregarMateriais();
   if (document.getElementById("formCadastro")) configurarCadastro();
@@ -11,6 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+=======
+  if (document.getElementById("materiais")) carregarMateriais();
+  if (document.getElementById("formCadastro")) configurarCadastro();
+  if (document.getElementById("formLogin")) configurarLogin();
+});
+
+>>>>>>> 2924c5a716942e07582dcdcc194bed9361dffd5f
 async function carregarDisciplinas() {
   try {
     const resp = await fetch(`${apiBase}/disciplina`);
@@ -18,14 +26,22 @@ async function carregarDisciplinas() {
     const container = document.getElementById("disciplinas");
     container.innerHTML = "";
     data.forEach(d => {
+<<<<<<< HEAD
+=======
+        console.log(d);
+>>>>>>> 2924c5a716942e07582dcdcc194bed9361dffd5f
       container.innerHTML += `
         <div class="col-md-4">
           <div class="card p-3">
             <h5>${d.nome}</h5>
+<<<<<<< HEAD
             <a href="/FRONT/materias.html?id=${d.disciplinaId}&nome=${encodeURIComponent(d.nome)}" 
               class="btn btn-primary btn-sm mt-2">
               Ver materiais
             </a>
+=======
+            <a href="./materiais.html?id=${d.disciplinaId}&nome=${encodeURIComponent(d.nome)}" class="btn btn-primary btn-sm mt-2">Ver materiais</a>
+>>>>>>> 2924c5a716942e07582dcdcc194bed9361dffd5f
           </div>
         </div>
       `;
@@ -36,6 +52,7 @@ async function carregarDisciplinas() {
 }
 
 async function carregarMateriais() {
+<<<<<<< HEAD
   const params = new URLSearchParams(window.location.search);
   const disciplinaId = params.get("id");
 
@@ -120,10 +137,61 @@ async function configurarCadastro() {
 
     console.log("🎯 Material a ser enviado:", JSON.stringify(material, null, 2));
 
+=======
+    console.log("carregarMateriais() foi chamada");
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+  const nome = params.get("nome");
+  document.getElementById("tituloDisciplina").textContent = nome;
+
+  console.log("API URL:", `${apiBase}/material/disciplina/${id}`);
+
+  try {
+
+    const resp = await fetch(`${apiBase}/material/disciplina/${id}`); //${apiBase}/materiais/disciplina/${id}
+    const data = await resp.json();
+    const container = document.getElementById("materiais");
+    container.innerHTML = "";
+    data.forEach(m => {
+      let conteudo = "";
+      if (m.tipo === "video") {
+        conteudo = `<video controls width="100%"><source src="${m.url}" type="video/mp4"></video>`;
+      } else if (m.tipo === "pdf") {
+        conteudo = `<iframe src="${m.url}" width="100%" height="400"></iframe>`;
+      } else {
+        conteudo = `<a href="${m.url}" target="_blank" class="btn btn-secondary">Abrir Material</a>`;
+      }
+      container.innerHTML += `
+        <div class="col-md-6">
+          <div class="card p-3">
+            <h5>${m.titulo}</h5>
+            ${conteudo}
+          </div>
+        </div>
+      `;
+    });
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function configurarCadastro() {
+  const form = document.getElementById("formCadastro");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const novoMaterial = {
+      disciplina: { nome: document.getElementById("disciplina").value },
+      titulo: document.getElementById("titulo").value,
+      tipo: document.getElementById("tipo").value,
+      url: document.getElementById("url").value
+    };
+>>>>>>> 2924c5a716942e07582dcdcc194bed9361dffd5f
     try {
       const resp = await fetch(`${apiBase}/material`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+<<<<<<< HEAD
         body: JSON.stringify(material)
       });
 
@@ -136,11 +204,26 @@ async function configurarCadastro() {
     } catch (e) {
       console.error(e);
       alert("⚠️ Erro na comunicação com o servidor.");
+=======
+        body: JSON.stringify(novoMaterial)
+      });
+      if (resp.ok) {
+        alert("Material cadastrado com sucesso!");
+        form.reset();
+      } else {
+        alert("Erro ao cadastrar material.");
+      }
+    } catch (e) {
+      console.error(e);
+>>>>>>> 2924c5a716942e07582dcdcc194bed9361dffd5f
     }
   });
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2924c5a716942e07582dcdcc194bed9361dffd5f
 async function configurarLogin() {
   const form = document.getElementById("formLogin");
   form.addEventListener("submit", async (e) => {
@@ -175,6 +258,7 @@ function logout() {
   localStorage.removeItem("usuario");
   window.location.href = "login.html";
 }
+<<<<<<< HEAD
 
 async function carregarDetalhesMaterial() {
   const params = new URLSearchParams(window.location.search);
@@ -253,3 +337,5 @@ async function cadastrarDisciplina(form) {
     alert("⚠️ Erro ao conectar com o servidor.");
   }
 }
+=======
+>>>>>>> 2924c5a716942e07582dcdcc194bed9361dffd5f
