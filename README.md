@@ -61,7 +61,6 @@ O projeto é dividido em duas partes principais:
 ├── materiais.html
 ├── script.js
 └── style.css
-
 ---
 
 ## 🧠 Exemplo de Requisição
@@ -104,20 +103,20 @@ O sistema utiliza PostgreSQL como banco relacional.
 As principais tabelas são:
 
 - disciplina
-
- -- disciplina_id (PK)
-
- -- nome
+    
+    - disciplina_id (PK)
+    
+    - nome
 
 - material
 
- -- material_id (PK)
+    - material_id (PK)
 
- -- nome
+    - nome
 
- -- descricao
+    - descricao
 
- -- disciplina_id (FK)
+    - disciplina_id (FK)
 
 Relação:
 Uma disciplina possui vários materiais, mas cada material pertence a uma única disciplina.
