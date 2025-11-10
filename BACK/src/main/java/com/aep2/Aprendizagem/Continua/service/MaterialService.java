@@ -35,11 +35,7 @@ public class MaterialService {
         materialEditado.setUrl(material.getUrl());
         materialEditado.setTitulo(material.getTitulo());
 
-<<<<<<< HEAD
-        return materialRepository.save(material);
-=======
         return materialRepository.save(materialEditado);
->>>>>>> 2924c5a716942e07582dcdcc194bed9361dffd5f
     }
 
     public void deletarMaterial(Long id){

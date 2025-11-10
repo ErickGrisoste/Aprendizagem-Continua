@@ -1,6 +1,5 @@
 package com.aep2.Aprendizagem.Continua.model;
 
-<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,12 +13,6 @@ import jakarta.persistence.*;
   generator = ObjectIdGenerators.PropertyGenerator.class,
   property = "materialId"
 )
-=======
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-
-@Entity
->>>>>>> 2924c5a716942e07582dcdcc194bed9361dffd5f
 public class Material {
 
     @Id
@@ -32,10 +25,6 @@ public class Material {
 
     @ManyToOne
     @JoinColumn(name = "disciplinaId")
-<<<<<<< HEAD
-=======
-    @JsonIgnore
->>>>>>> 2924c5a716942e07582dcdcc194bed9361dffd5f
     private Disciplina disciplina;
 
     public Material() {}
