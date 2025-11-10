@@ -1,11 +1,20 @@
 package com.aep2.Aprendizagem.Continua.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class,
+  property = "disciplinaId"
+)
 public class Disciplina {
 
     @Id
@@ -15,7 +24,6 @@ public class Disciplina {
     private String professor;
 
     @OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL)
-    @JsonBackReference
     private List<Material> materiais;
 
 

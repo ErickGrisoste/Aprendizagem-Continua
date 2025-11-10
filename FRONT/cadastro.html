@@ -13,32 +13,46 @@
       <a class="navbar-brand" href="index.html">← Voltar</a>
     </div>
   </nav>
+
   <main class="container">
     <h2>Cadastrar Material</h2>
     <form id="formCadastro" class="mt-3">
       <div class="mb-3">
         <label class="form-label">Disciplina</label>
-        <input type="text" id="disciplina" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Título do Material</label>
-        <input type="text" id="titulo" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Tipo</label>
-        <select id="tipo" class="form-select">
-          <option value="video">Vídeo</option>
-          <option value="pdf">PDF</option>
-          <option value="slide">Slide</option>
+        <select id="disciplina" class="form-select" required>
+          <option value="">Carregando disciplinas...</option>
         </select>
       </div>
+
+      <div class="mb-3">
+        <label class="form-label">Título</label>
+        <input type="text" id="titulo" class="form-control" placeholder="Ex: Introdução à POO" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Descrição</label>
+        <textarea id="descricao" class="form-control" rows="3" placeholder="Breve resumo do material..." required></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Tipo</label>
+        <select id="tipo" class="form-select" required>
+          <option value="">Selecione...</option>
+          <option value="Vídeo">Vídeo</option>
+          <option value="PDF">PDF</option>
+          <option value="Slide">Slide</option>
+        </select>
+      </div>
+
       <div class="mb-3">
         <label class="form-label">URL</label>
         <input type="url" id="url" class="form-control" placeholder="https://..." required>
       </div>
+
       <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
     </form>
   </main>
+
   <script src="script.js"></script>
 </body>
 </html>
