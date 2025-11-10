@@ -36,7 +36,7 @@ O sistema foi desenvolvido com **Java (Spring Boot)** no back-end e **HTML, CSS 
 ## 🗂️ Organização do Projeto
 
 O projeto é dividido em duas partes principais:
-
+```
 📁 backend/
 │ ├── src/
 │ │ ├── main/java/com/aprendizagemcontinua/
@@ -61,6 +61,7 @@ O projeto é dividido em duas partes principais:
 ├── materiais.html
 ├── script.js
 └── style.css
+```
 ---
 
 ## 🧠 Exemplo de Requisição
