@@ -82,7 +82,7 @@ async function carregarDisciplinas() {
                 <div class="col-md-4">
                     <div class="card p-3">
                         <h5>${d.nome}</h5>
-                        <a href="materiais.html?id=${d.disciplinaId}&nome=${encodeURIComponent(d.nome)}" 
+                        <a href="materias.html?id=${d.disciplinaId}&nome=${encodeURIComponent(d.nome)}" 
                             class="btn btn-primary btn-sm mt-2">
                             Ver materiais
                         </a>
@@ -259,23 +259,23 @@ async function cadastrarEntidade(endpoint, data, formId, successMessage) {
 
 async function cadastrarAluno() {
     const aluno = { 
-        nome: document.getElementById("nome").value, 
-        ra: document.getElementById("ra").value 
+        nome: document.getElementById("alunoNome").value, 
+        RA: document.getElementById("alunoRa").value 
     };
     await cadastrarEntidade("/aluno", aluno, "formAluno", "Aluno");
 }
 
 async function cadastrarProfessor() {
     const professor = { 
-        nome: document.getElementById("nome").value, 
-        ra: document.getElementById("ra").value 
+        nome: document.getElementById("profNome").value, 
+        RA: document.getElementById("profRa").value 
     };
     await cadastrarEntidade("/professor", professor, "formProfessor", "Professor");
 }
 
 async function cadastrarAdministrador() {
     const administrador = { 
-        nome: document.getElementById("nome").value 
+        nome: document.getElementById("adminNome").value 
     };
     await cadastrarEntidade("/administrador", administrador, "formAdmin", "Administrador");
 }
